@@ -679,7 +679,7 @@ func keyAndOpts(tag string) (string, options, error) {
 			}
 			if isDefault {
 				o = strings.TrimLeftFunc(strings.Join(tagOpts[i:], ","), unicode.IsSpace)
-				opts.Default = strings.TrimPrefix(o, optDefault)
+				opts.Default = o[len(optDefault):]
 				break
 			}
 		}
@@ -706,7 +706,7 @@ func keyAndOpts(tag string) (string, options, error) {
 		// any commas, so extract it directly and stop.
 		if hasPrefixFold(strings.TrimLeftFunc(seg, unicode.IsSpace), optDefault) {
 			o := strings.TrimLeftFunc(rest, unicode.IsSpace)
-			opts.Default = strings.TrimPrefix(o, optDefault)
+			opts.Default = o[len(optDefault):]
 			break
 		}
 
@@ -745,11 +745,11 @@ func applyTagOption(o string, opts *options) (isDefault bool, err error) {
 	case strings.EqualFold(keyword, optNoInit):
 		opts.NoInit = true
 	case hasPrefixFold(o, optPrefix):
-		opts.Prefix = strings.TrimPrefix(o, optPrefix)
+		opts.Prefix = o[len(optPrefix):]
 	case hasPrefixFold(o, optDelimiter):
-		opts.Delimiter = strings.TrimPrefix(o, optDelimiter)
+		opts.Delimiter = o[len(optDelimiter):]
 	case hasPrefixFold(o, optSeparator):
-		opts.Separator = strings.TrimPrefix(o, optSeparator)
+		opts.Separator = o[len(optSeparator):]
 	case hasPrefixFold(o, optDefault):
 		return true, nil
 	default:

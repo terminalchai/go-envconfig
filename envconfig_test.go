@@ -4468,14 +4468,36 @@ func TestKeyAndOpts(t *testing.T) {
 			},
 		},
 		{
-			// Preserves existing behavior: a mixed-case value-option name is
-			// matched but not stripped, so the option name leaks into the value.
-			name: "mixed_case_prefix_not_stripped",
+			name: "mixed_case_prefix",
 			tag:  "FIELD,PREFIX=PX_",
 			key:  "FIELD",
 			opts: options{
-				Prefix: "PREFIX=PX_",
+				Prefix: "PX_",
 			},
+		},
+		{
+			name: "mixed_case_delimiter",
+			tag:  "FIELD, DeLiMiTeR= AbC ",
+			key:  "FIELD",
+			opts: options{Delimiter: " AbC "},
+		},
+		{
+			name: "mixed_case_separator",
+			tag:  "FIELD, SePaRaToR= XyZ ",
+			key:  "FIELD",
+			opts: options{Separator: " XyZ "},
+		},
+		{
+			name: "mixed_case_default",
+			tag:  "FIELD, DeFaUlT= AbC,XyZ ",
+			key:  "FIELD",
+			opts: options{Default: " AbC,XyZ "},
+		},
+		{
+			name: "mixed_case_default_escaped",
+			tag:  "FIELD, DeFaUlT= AbC\\,XyZ ",
+			key:  "FIELD",
+			opts: options{Default: " AbC,XyZ "},
 		},
 		{
 			name:    "unknown_option",
